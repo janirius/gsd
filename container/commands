@@ -1,0 +1,29 @@
+docker image build -t janirius/gsd:1.0.0 .
+docker image ls
+
+docker login
+docker image push janirius/gsd:1.0.0
+
+docker image rm janirius/gsd:1.0.0
+docker container run -d --name web -p 8000:8080 janirius/gsd:1.0.0      # -d flag means detached
+docker container ls
+
+docker container stop web
+docker container ls -a
+
+docker container start  web
+
+docker container stop web
+docker  container rm web
+docker container ls
+
+
+
+
+
+docker container run -it --name test alpine sh          # Run container in interactive mode , non-detached
+
+# CTRL + P + Q to back to the host terminal - doesn't work in VS Code terminal with default key shortcuts. CTRL + D stops the container    
+
+docker container rm test -f
+
