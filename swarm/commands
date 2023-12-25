@@ -1,0 +1,8 @@
+choco upgrade multipass
+multipass version
+
+multipass launch docker --name node1
+multipass launch docker --name node2
+multipass launch docker --name node3
+multipass launch docker --name node4
+multipass launch docker --name node5
