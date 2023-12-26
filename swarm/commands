@@ -1,8 +1,43 @@
 choco upgrade multipass
 multipass version
 
-multipass launch docker --name node1
+multipass launch docker --name node1 --memory 1G
 multipass launch docker --name node2
 multipass launch docker --name node3
 multipass launch docker --name node4
 multipass launch docker --name node5
+
+
+
+
+# play with docker 
+# copy/paste ctrl+shift+c/v
+docker swarm init
+docker swarm join-token manager 
+docker swarm join --token SWMTKN-1-5gbc7fk7vxtm8i0gmkbeh3gi9ssslu92omm7s7vcgnqbvk7h38-53vloaol5n7wwb50hq57zg04h 192.168.0.8:2377
+docker node ls
+
+docker swarm join-token worker 
+docker swarm join --token SWMTKN-1-5gbc7fk7vxtm8i0gmkbeh3gi9ssslu92omm7s7vcgnqbvk7h38-bci3355vlahputjrhhfmuasbu 192.168.0.6:2377
+
+# skip managers for app scheduler
+docker node update --availability drain node1
+docker node update --availability drain node2
+docker node update --availability drain node3
+
+
+docker service create --name web -p 8080:8080 --replicas 3 nigelpoulton/gsd:web2023
+docker service ls
+docker service ps web
+
+docker service scale web=10
+docker service ps web
+
+
+# inside worker:
+docker container ls
+docker container rm 684e45b0cea6 -f
+
+# inside manager:
+docker service ps web
+docker service ls # 10/10
