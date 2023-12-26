@@ -41,3 +41,14 @@ docker container rm 684e45b0cea6 -f
 # inside manager:
 docker service ps web
 docker service ls # 10/10
+
+
+
+# inside manager:
+# 1 build the image
+git clone https://github.com/janirius/gsd.git
+cd gsd/swarm
+docker image build -t janirius/gsd:swarm2023 .
+docker image ls
+
+docker image push janirius/gsd:swarm2023
