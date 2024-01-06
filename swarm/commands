@@ -43,7 +43,11 @@ docker service ps web
 docker service ls # 10/10
 
 
+# cleanup
+docker service rm web
 
+
+# STACK
 # inside manager:
 # 1 build the image
 git clone https://github.com/janirius/gsd.git
@@ -52,3 +56,16 @@ docker image build -t janirius/gsd:swarm2023 .
 docker image ls
 
 docker image push janirius/gsd:swarm2023
+
+# 2 deploy stack
+
+docker stack deploy -c compose.yml counter
+docker stack ls
+docker stack services counter
+docker stack ps counter
+
+# cleanup
+docker stack rm counter
+
+# delete the swarm and back to regular config
+docker swarm leave --force
